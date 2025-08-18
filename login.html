@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Seamate</title>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .login-container {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  button {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  #loginBtn { background: #007bff; color: #fff; }
+  #loginBtn:hover { background: #0056b3; }
+  #signupBtn { background: #28a745; color: #fff; }
+  #signupBtn:hover { background: #218838; }
+  .message { text-align: center; margin-top: 15px; color: red; }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Login / Sign Up</h2>
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <button id="loginBtn">Login</button>
+  <button id="signupBtn">Sign Up</button>
+  <div class="message" id="message"></div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9CRXyjtTrIiYM2u7sNUNF-4fBpZIl23s",
+    authDomain: "seamate-bc3b3.firebaseapp.com",
+    projectId: "seamate-bc3b3",
+    storageBucket: "seamate-bc3b3.firebasestorage.app",
+    messagingSenderId: "430585909355",
+    appId: "1:430585909355:web:052c719834ff88b9a5612e",
+    measurementId: "G-53E0MD21CB"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const loginBtn = document.getElementById('loginBtn');
+  const signupBtn = document.getElementById('signupBtn');
+  const messageDiv = document.getElementById('message');
+
+  // Login function
+  loginBtn.addEventListener('click', () => {
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    if(!email || !password){
+      messageDiv.style.color = 'red';
+      messageDiv.textContent = "Please enter email and password";
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        messageDiv.style.color = 'green';
+        messageDiv.textContent = "Login successful! Redirecting...";
+        setTimeout(() => {
+          window.location.href = "index.html"; // Redirect after login
+        }, 1000);
+      })
+      .catch((error) => {
+        messageDiv.style.color = 'red';
+        messageDiv.textContent = error.message;
+      });
+  });
+
+  // Sign Up function
+  signupBtn.addEventListener('click', () => {
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    if(!email || !password){
+      messageDiv.style.color = 'red';
+      messageDiv.textContent = "Please enter email and password";
+      return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        messageDiv.style.color = 'green';
+        messageDiv.textContent = "Sign up successful! You can now login.";
+        emailInput.value = '';
+        passwordInput.value = '';
+      })
+      .catch((error) => {
+        messageDiv.style.color = 'red';
+        messageDiv.textContent = error.message;
+      });
+  });
+</script>
+
+</body>
+</html>
+

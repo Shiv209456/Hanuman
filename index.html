@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seamate Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Navbar styling */
+    #navbar { display:flex; justify-content:space-between; align-items:center; background:#007bff; padding:10px 20px; color:#fff; }
+    #navleft img { height:40px; }
+    #navcenter a { margin:0 15px; color:#fff; text-decoration:none; font-weight:bold; }
+    #navright input { padding:5px; border-radius:5px; border:none; }
+    #navright button { padding:6px 12px; margin-left:5px; border:none; border-radius:5px; cursor:pointer; background:#ffc107; }
+    #logoutBtn { background:#dc3545; color:#0e0d0d; padding:6px 12px; border:none; border-radius:5px; cursor:pointer; margin-left:10px; }
+
+    /* Hero image */
+    #image { width:100%; max-height:800px; object-fit:cover; margin-bottom:20px; }
+  </style>
+</head>
+<body>
+
+<div id="navbar">
+  <div id="navleft">
+    <img src="anchor-8556719_640.jpg" id="logo">
+  </div>
+  <div id="navcenter">
+    <a href="Aboutus.html">AboutUs</a>
+    <a href="bookappointment.html">BookAppointment</a>
+    <a href="just.html">ContactUs</a>
+  </div>
+  <div id="navright">
+    <input placeholder="Search here">
+    <button>Search</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+
+<div>
+  <img src="andy-li-CpsTAUPoScw-unsplash.jpg" id="image">
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9CRXyjtTrIiYM2u7sNUNF-4fBpZIl23s",
+    authDomain: "seamate-bc3b3.firebaseapp.com",
+    projectId: "seamate-bc3b3",
+    storageBucket: "seamate-bc3b3.firebasestorage.app",
+    messagingSenderId: "430585909355",
+    appId: "1:430585909355:web:052c719834ff88b9a5612e",
+    measurementId: "G-53E0MD21CB"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Protect page: redirect to login if not logged in
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+    }
+  });
+
+  // Logout
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+      window.location.href = "login.html";
+    }).catch((error) => {
+      alert("Error logging out: " + error.message);
+    });
+  });
+</script>
+<!-- Footer -->
+<footer style="background:#222; color:#fff; padding:40px 20px; font-family:'Roboto',sans-serif;">
+  <div style="max-width:1200px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:20px;">
+    
+    <!-- About / Logo -->
+    <div style="flex:1; min-width:200px;">
+      <img src="anchor-8556719_640.jpg" alt="Logo" style="height:50px; margin-bottom:15px;">
+      <p style="font-size:14px; color:#ccc; line-height:1.6;">
+        Seamate Consultancy - Bringing the best Consultancy Network.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div style="flex:1; min-width:150px;">
+      <h4 style="margin-bottom:15px; color:#fff;">Quick Links</h4>
+      <ul style="list-style:none; padding:0; line-height:2;">
+        <li><a href="#" style="color:#ccc; text-decoration:none; transition:0.3s;">About Us</a></li>
+        <li><a href="bookappointment.html" style="color:#ccc; text-decoration:none; transition:0.3s;">Book Appointment</a></li>
+        <li><a href="just.html" style="color:#ccc; text-decoration:none; transition:0.3s;">Contact Us</a></li>
+        <li><a href="#" style="color:#ccc; text-decoration:none; transition:0.3s;">Terms & Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Social Media -->
+    <div style="flex:1; min-width:150px;">
+      <h4 style="margin-bottom:15px; color:#fff;">Connect With Us</h4>
+      <div style="display:flex; gap:15px;">
+        <a href="https://www.instagram.com/hanu________anonymous?igsh=MWF2NXp0emh4ZWUw" target="_blank" style="color:#fff; font-size:20px; transition:0.3s;">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/qr/QAOQS36WO5TJM1" target="_blank" style="color:#fff; font-size:20px; transition:0.3s;">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <hr style="border-color:#444; margin:20px 0;">
+  <p style="text-align:center; font-size:13px; color:#aaa;">&copy; 2025 Seamate Consultancy. All Rights Reserved.</p>
+</footer>
+
+<!-- Font Awesome for social icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+</body>
+</html>

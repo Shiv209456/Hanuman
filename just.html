@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="just.css">
+  <style>
+    /* Navbar styling */ 
+    #navbar { display:flex; justify-content:space-between; align-items:center; background:#007bff; padding:10px 20px; color:#fff; } 
+    #navleft img { height:40px; } 
+    #navcenter a { margin:0 15px; color:#fff; text-decoration:none; font-weight:bold; position:relative; } 
+    #navright input { padding:5px; border-radius:5px; border:none; } 
+    #navright button { padding:6px 12px; margin-left:5px; border:none; border-radius:5px; cursor:pointer; background:#ffc107; }
+    /* Underline effect */
+    #navcenter a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background-color: #ffc107; 
+      transition: width 0.3s ease;
+    }
+    #navcenter a:hover { color: #ffc107; }
+    #navcenter a:hover::after { width: 100%; }
+    /* Form styling */
+    .contactform { max-width: 600px; margin: auto; }
+    .form-row { margin-bottom: 15px; }
+    input, select, textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background:#007bff; color:rgb(12, 12, 12); padding:10px 20px; border:none; border-radius:5px; cursor:pointer; }
+    button:hover { background:#0056b3; }
+  </style>
+</head>
+<body>
+  <div id="navbar"> 
+    <div id="navleft"> <img src="anchor-8556719_640.jpg" id="logo"> </div> 
+    <div id="navcenter"> 
+      <a href="index.html">Home</a> 
+      <a href="bookappointment.html">BookAppointment</a> 
+      <a href="just.html">ContactUs</a> 
+    </div> 
+  </div>
+
+  <br>
+  <div>
+    <h4 class="subheading">Contact Us</h4>
+    <h2 class="heading">Let’s Start a Conversation</h2>
+    <p>
+      <span style="font-weight: 400;">
+        We’re here to assist you with all your<strong> Merchant Navy Education and Career </strong> related needs. Reach out to us today!
+      </span>
+    </p>
+  </div>
+
+  <div class="contactbox">
+    <div class="boxleft">
+      <h3>Working Hours</h3>
+      <p>Monday to Saturday<br>10:30 Am to 6:30 Pm</p>
+    </div>
+    <div class="boxright">
+      <h3>ContactInfo</h3>
+      <p>Phone: 123456789<br>Email: info@gmail.com</p>
+    </div>
+  </div>
+  <br><br>
+
+  <form class="contactform" id="contactForm">
+    <div class="form-row">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="phone" placeholder="Your contact number" required>
+    </div>
+    <div class="form-row">
+      <select id="service" required>
+        <option value="">-- Select Issue --</option>
+        <option value="Councelling">Councelling</option>
+        <option value="Addmission">Addmission</option>
+        <option value="Appointment">Appointment</option>
+        <option value="Payments">Payments</option>
+        <option value="contact">Contact</option>
+        <option value="Login">Login</option>
+        <option value="Others">Others</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <textarea id="message" placeholder="Message" required></textarea>
+    </div>
+    <button type="submit" id="buttn">Submit</button>
+  </form>
+
+  <!-- Firebase Scripts -->
+  <script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9CRXyjtTrIiYM2u7sNUNF-4fBpZIl23s",
+      authDomain: "seamate-bc3b3.firebaseapp.com",
+      databaseURL: "https://seamate-bc3b3-default-rtdb.firebaseio.com",
+      projectId: "seamate-bc3b3",
+      storageBucket: "seamate-bc3b3.firebasestorage.app",
+      messagingSenderId: "430585909355",
+      appId: "1:430585909355:web:052c719834ff88b9a5612e",
+      measurementId: "G-53E0MD21CB"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Handle form submit
+    document.getElementById("contactForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const service = document.getElementById("service").value;
+      const message = document.getElementById("message").value;
+
+      // Push to Firebase DB
+      const contactRef = ref(db, 'messages');
+      const newMessageRef = push(contactRef);
+
+      set(newMessageRef, {
+        name: name,
+        phone: phone,
+        service: service,
+        message: message,
+        timestamp: new Date().toISOString()
+      }).then(() => {
+        alert("Message Sent Successfully ✅");
+        document.getElementById("contactForm").reset();
+      }).catch((error) => {
+        alert("Error: " + error);
+      });
+    });
+  </script>
+</body>
+</html>

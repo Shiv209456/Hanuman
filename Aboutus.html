@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Maritime</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+    body {
+      background: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+    }
+    .hero {
+      background: linear-gradient(to right, #2563eb, #1e3a8a);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+    .about {
+      max-width: 1100px;
+      margin: 60px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      padding: 0 20px;
+    }
+    .about img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .about h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+    .about p {
+      margin-bottom: 20px;
+      color: #555;
+      font-size: 1.1rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #1e3a8a;
+    }
+    .services {
+      background: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .services h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #1e3a8a;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .service {
+      background: #f9fafb;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .service:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transform: translateY(-5px);
+    }
+    .service h3 {
+      margin-top: 15px;
+      font-size: 1.3rem;
+      color: #2563eb;
+    }
+    .service p {
+      margin-top: 10px;
+      color: #555;
+      font-size: 1rem;
+    }
+    .cta {
+      background: #2563eb;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      margin-top: 60px;
+    }
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .cta p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+    .cta .btn {
+      background: white;
+      color: #2563eb;
+      font-weight: bold;
+    }
+    .cta .btn:hover {
+      background: #e5e7eb;
+    }
+    @media (max-width: 768px) {
+      .about {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .about h2, .services h2, .cta h2 {
+        font-size: 1.8rem;
+      }
+    }
+    /* Navbar styling */ 
+    #navbar { display:flex; justify-content:space-between; align-items:center; background:#007bff; padding:10px 20px; color:#fff; } #navleft img { height:40px; } #navcenter a { margin:0 15px; color:#fff; text-decoration:none; font-weight:bold; } #navright input { padding:5px; border-radius:5px; border:none; } #navright button { padding:6px 12px; margin-left:5px; border:none; border-radius:5px; cursor:pointer; background:#ffc107; }
+  </style>
+</head>
+<body>
+    <div id="navbar"> <div id="navleft"> <img src="anchor-8556719_640.jpg" id="logo"> </div> <div id="navcenter"> <a href="index.html">Home</a> <a href="bookappointment.html">BookAppointment</a> <a href="just.html">ContactUs</a> </div> </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Our Mission</h1>
+    <p>
+      Empowering and guiding aspiring Merchant Navy professionals and seasoned seafarers
+      towards fulfilling and successful careers in the Maritime Industry.
+    </p>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <img src="a23bbf7c2d18006982de26b3875407b5-1024x682.webp" alt="Maritime Growth">
+    <div>
+      <h2>Who We Are</h2>
+      <p>
+        With <strong>over seven years of dedicated service</strong>, we provide comprehensive
+        solutions for maritime aspirants and professionals. Our goal is to ensure a seamless
+        and enriching journey, fostering excellence and growth in the global shipping community.
+      </p>
+      <a href="bookappointment.html" class="btn">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services">
+    <h2>What We Offer</h2>
+    <div class="service-grid">
+      <a href="bookappointment.html" class="service">
+        <h3>Career Counseling</h3>
+        <p>Personalized guidance to help you chart the right maritime career path.</p>
+      </a>
+      <a href="bookappointment.html" class="service">
+        <h3>Admission Assistance</h3>
+        <p>Helping you secure admissions at reputed maritime institutions.</p>
+      </a>
+      <a href="bookappointment.html" class="service">
+        <h3>Sponsorship Guidance</h3>
+        <p>Support in finding sponsorship opportunities for a smooth career journey.</p>
+      </a>
+      <a href="bookappointment.html" class="service">
+        <h3>Research & Development</h3>
+        <p>Promoting innovation and growth in the maritime industry.</p>
+      </a>
+      <a href="bookappointment.html" class="service">
+        <h3>Study Material</h3>
+        <p>Access to reliable study material designed for maritime success.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Call To Action -->
+  <section class="cta">
+    <h2>Join the Maritime Journey</h2>
+    <p>Let us guide you towards a successful and rewarding career in the global shipping industry.</p>
+    <a href="just.html" class="btn">Contact Us</a>
+  </section>
+
+</body>
+</html>
+

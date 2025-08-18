@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Appointment</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f6fc;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+      color: #444;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 15px;
+    }
+    input:focus, select:focus {
+      border-color: #007bff;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    /* Navbar styling */ 
+    #navbar { display:flex; justify-content:space-between; align-items:center; background:#007bff; padding:10px 20px; color:#fff; } #navleft img { height:40px; } #navcenter a { margin:0 15px; color:#fff; text-decoration:none; font-weight:bold; } #navright input { padding:5px; border-radius:5px; border:none; } #navright button { padding:6px 12px; margin-left:5px; border:none; border-radius:5px; cursor:pointer; background:#ffc107; }
+  </style>
+</head>
+<body>
+    <div id="navbar"> <div id="navleft"> <img src="anchor-8556719_640.jpg" id="logo"> </div> <div id="navcenter"> <a href="index.html">Home</a> <a href="bookappointment.html">BookAppointment</a> <a href="just.html">ContactUs</a> </div> </div>
+  <div class="container">
+    <h2>Book Your Appointment</h2>
+    <form id="appointmentForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required />
+
+      <label for="service">Select Service</label>
+      <select id="service" name="service" required>
+        <option value="">-- Select Service --</option>
+        <option value="Admission Assistance">Admission Assistance</option>
+        <option value="Sponsorship Guidance">Sponsorship Guidance</option>
+        <option value="1 on 1 Counselling">1 on 1 Counselling</option>
+        <option value="Others">Others</option>
+      </select>
+
+      <button type="submit" id="submitBtn">Pay & Submit</button>
+    </form>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+  <!-- Razorpay SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    // 🔹 Your Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9CRXyjtTrIiYM2u7sNUNF-4fBpZIl23s",
+      authDomain: "seamate-bc3b3.firebaseapp.com",
+      databaseURL: "https://seamate-bc3b3-default-rtdb.firebaseio.com",
+      projectId: "seamate-bc3b3",
+      storageBucket: "seamate-bc3b3.firebasestorage.app",
+      messagingSenderId: "430585909355",
+      appId: "1:430585909355:web:052c719834ff88b9a5612e",
+      measurementId: "G-53E0MD21CB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // 🔹 Handle Form Submit
+    document.getElementById("appointmentForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const service = document.getElementById("service").value;
+
+      var options = {
+        "key": "rzp_test_1234567890", // replace with your Razorpay key
+        "amount": 50000, // amount in paise (50000 = ₹500)
+        "currency": "INR",
+        "name": "Seamate",
+        "description": "Appointment Booking Payment",
+        "handler": async function (response){
+          try {
+            await set(ref(db, 'appointments/' + response.razorpay_payment_id), {
+              name: name,
+              email: email,
+              phone: phone,
+              service: service,
+              paymentId: response.razorpay_payment_id,
+              status: "Paid"
+            });
+            alert("✅ Appointment booked successfully!");
+            document.getElementById("appointmentForm").reset();
+          } catch(err){
+            alert("❌ Error saving data: " + err);
+          }
+        },
+        "prefill": {
+          "name": name,
+          "email": email,
+          "contact": phone
+        },
+        "theme": {
+          "color": "#007bff"
+        }
+      };
+      const rzp1 = new Razorpay(options);
+      rzp1.open();
+    });
+  </script>
+</body>
+</html>
+
